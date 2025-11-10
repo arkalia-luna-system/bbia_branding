@@ -6,12 +6,12 @@ Génère des images de test sur différents fonds pour vérifier la lisibilité
 import os
 from PIL import Image, ImageDraw, ImageFont
 
-# Couleurs de test
+# Couleurs de test (selon COULEURS_OFFICIELLES.md)
 COLORS = {
     "fond_clair": "#FFFFFF",  # Blanc
-    "fond_sombre": "#1A1A1A",  # Noir/gris foncé
-    "fond_turquoise": "#008181",  # Turquoise BBIA
-    "fond_bleu": "#0066FF",  # Bleu BBIA officiel
+    "fond_sombre": "#020202",  # Noir foncé BBIA (détails)
+    "fond_bleu": "#008181",  # Bleu BBIA (fond logo)
+    "fond_noir": "#000000",  # Noir pur BBIA (texte)
 }
 
 # Taille des mockups

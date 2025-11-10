@@ -74,5 +74,5 @@ export_inkscape "bbia_logo_horizontal_SOURCE.svg" "bbia_logo_horizontal.png" "10
 echo ""
 
 echo "✅ Tous les fichiers ont été réexportés avec Inkscape !"
-echo "💡 Vérifiez maintenant que les couleurs sont correctes (turquoise #008181, blanc, etc.)"
+echo "💡 Vérifiez maintenant que les couleurs sont correctes (bleu #008181, blanc, etc.)"
 

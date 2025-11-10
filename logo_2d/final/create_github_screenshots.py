@@ -7,12 +7,12 @@ import os
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
-# Couleurs de fond
+# Couleurs de fond (selon COULEURS_OFFICIELLES.md)
 COLORS = {
-    "fond_clair": "#FFFFFF",
-    "fond_sombre": "#1A1A1A",
-    "fond_turquoise": "#008181",
-    "fond_bleu": "#0066FF",
+    "fond_clair": "#FFFFFF",  # Blanc
+    "fond_sombre": "#020202",  # Noir foncé BBIA (détails)
+    "fond_bleu": "#008181",  # Bleu BBIA (fond logo)
+    "fond_noir": "#000000",  # Noir pur BBIA (texte)
 }
 
 # Tailles des mockups

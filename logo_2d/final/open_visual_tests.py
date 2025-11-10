@@ -159,9 +159,9 @@ def create_favicon_test_html():
                 </div>
                 <div style="background: #008181; padding: 20px; border: 1px solid #ddd; text-align: center;">
                     <div class="favicon-size" style="margin: 0 auto 10px;">
-                        <img src="bbia_favicon_32x32.png" alt="Favicon sur fond turquoise">
+                        <img src="bbia_favicon_32x32.png" alt="Favicon sur fond bleu">
                     </div>
-                    <p style="color: white;"><strong>Fond turquoise</strong></p>
+                    <p style="color: white;"><strong>Fond bleu</strong></p>
                 </div>
             </div>
         </div>
@@ -174,7 +174,7 @@ def create_favicon_test_html():
                 <li>Détails visibles (yeux, forme du robot)</li>
                 <li>Contraste suffisant sur fond blanc</li>
                 <li>Contraste suffisant sur fond sombre</li>
-                <li>Contraste suffisant sur fond turquoise</li>
+                <li>Contraste suffisant sur fond bleu</li>
             </ul>
         </div>
         
@@ -212,8 +212,8 @@ def main():
     mockups = [
         "mockup_fond_clair.png",
         "mockup_fond_sombre.png",
-        "mockup_fond_turquoise.png",
         "mockup_fond_bleu.png",
+        "mockup_fond_noir.png",
     ]
 
     print("\n📸 Ouverture des mockups de test...")

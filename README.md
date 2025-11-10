@@ -6,17 +6,19 @@
 
 [![Status](https://img.shields.io/badge/status-active-success.svg)](https://github.com)
 [![Version](https://img.shields.io/badge/version-1.0-blue.svg)](https://github.com)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)
 [![Inkscape](https://img.shields.io/badge/inkscape-1.4+-green.svg)](https://inkscape.org/)
 [![Maintenance](https://img.shields.io/badge/maintained-yes-green.svg)](https://github.com)
+[![Logos](https://img.shields.io/badge/logos-5-orange.svg)](logo_2d/final/)
+[![Documentation](https://img.shields.io/badge/docs-15+-purple.svg)](docs/)
 
 [Logo 2D](#-logo-2d) • [Style Guide](#-style-guide) • [Documentation](#-documentation) • [Scripts](#️-scripts--automatisation)
 
 ---
 
 <div align="center">
-  <img src="logo_2d/final/bbia_mark_only_github.png" alt="BBIA Logo - Robot blanc stylisé sur fond turquoise" width="200" height="200">
+  <img src="logo_2d/final/bbia_mark_only_512x512.png" alt="BBIA Logo - Robot blanc stylisé sur fond bleu" width="200" height="200">
 </div>
 
 **Identité visuelle premium pour BBIA Reachy Mini**  
@@ -70,7 +72,7 @@
 | PNG | `bbia_mark_only_512x512.png` | Web (512×512px) |
 | PNG | `bbia_favicon_32x32.png` | Favicon (32×32px) |
 
-<img src="logo_2d/final/bbia_mark_only_github.png" alt="BBIA Mark Only - Symbole robotique stylisé" width="128" height="128">
+<img src="logo_2d/final/bbia_mark_only_512x512.png" alt="BBIA Mark Only - Symbole robotique stylisé" width="128" height="128">
 
 #### Vertical (Symbole + texte empilés)
 
@@ -79,7 +81,7 @@
 | SVG | `bbia_logo_vertical_v2_SOURCE.svg` | Vectoriel source (fichier principal) |
 | PNG | `bbia_logo_vertical_v2.png` | Haute résolution (taille originale) |
 
-<img src="logo_2d/final/bbia_logo_vertical_github.png" alt="BBIA Logo Vertical - Symbole et texte BBIA empilés" width="200">
+<img src="logo_2d/final/bbia_logo_vertical_v2.png" alt="BBIA Logo Vertical - Symbole et texte BBIA empilés" width="200">
 
 #### Horizontal (Symbole + texte côte à côte)
 
@@ -88,7 +90,7 @@
 | SVG | `bbia_logo_horizontal_SOURCE.svg` | Vectoriel source (fichier principal) |
 | PNG | `bbia_logo_horizontal.png` | Web (1024px largeur, hauteur auto) |
 
-<img src="logo_2d/final/bbia_logo_horizontal_github.png" alt="BBIA Logo Horizontal - Symbole et texte BBIA côte à côte" width="300">
+<img src="logo_2d/final/bbia_logo_horizontal.png" alt="BBIA Logo Horizontal - Symbole et texte BBIA côte à côte" width="300">
 
 </div>
 
@@ -118,17 +120,17 @@ Tous les logos sont dans : [`logo_2d/final/`](logo_2d/final/)
 
 <div align="center">
 
-| Couleur | Hex | Usage |
-|---------|-----|-------|
-| **BBIA Blue** | `#0066FF` | Primaire (logo, accents) |
-| **BBIA White** | `#FFFFFF` | Secondaire (fond, espace) |
-| **BBIA Gray** | `#2C2C2C` | Tertiaire (texte) |
-| **BBIA Blue Light** | `#3399FF` | Hover, états actifs |
-| **BBIA Gray Light** | `#E5E5E5` | Bordures, fonds |
+| Couleur | Échantillon | Hex | RGB | Usage |
+|---------|-------------|-----|-----|-------|
+| **BBIA Blue** | <span style="display:inline-block;width:40px;height:40px;background-color:#008181;border:2px solid #ddd;border-radius:4px;"></span> | `#008181` | `RGB(0, 129, 129)` | Fond du logo (carré bleu) |
+| **BBIA White** | <span style="display:inline-block;width:40px;height:40px;background-color:#FFFFFF;border:2px solid #ddd;border-radius:4px;"></span> | `#FFFFFF` | `RGB(255, 255, 255)` | Corps du robot |
+| **BBIA Gray Light** | <span style="display:inline-block;width:40px;height:40px;background-color:#CCCCCC;border:2px solid #ddd;border-radius:4px;"></span> | `#CCCCCC` | `RGB(204, 204, 204)` | Yeux du robot |
+| **BBIA Black Dark** | <span style="display:inline-block;width:40px;height:40px;background-color:#020202;border:2px solid #ddd;border-radius:4px;"></span> | `#020202` | `RGB(2, 2, 2)` | Détails et ombres |
+| **BBIA Black** | <span style="display:inline-block;width:40px;height:40px;background-color:#000000;border:2px solid #ddd;border-radius:4px;"></span> | `#000000` | `RGB(0, 0, 0)` | Texte "BBIA" |
 
 </div>
 
-> **Note** : Les logos utilisent des couleurs réelles différentes. Voir [`logo_2d/final/COULEURS_REELLES_LOGOS.md`](logo_2d/final/COULEURS_REELLES_LOGOS.md) pour les détails.
+> **Note** : Ces couleurs sont extraites directement des fichiers SVG `_SOURCE.svg`. Voir [`logo_2d/final/COULEURS_OFFICIELLES.md`](logo_2d/final/COULEURS_OFFICIELLES.md) pour les détails complets.
 
 ### Typographie
 
@@ -149,13 +151,16 @@ Tous les logos sont dans : [`logo_2d/final/`](logo_2d/final/)
 
 ### Scripts disponibles
 
-| Script | Description | Usage |
-|--------|-------------|-------|
-| `generate_all_logos.py` | Vérifie et génère tous les logos manquants | `python3 generate_all_logos.py` |
-| `create_horizontal_logo.py` | Crée le logo horizontal depuis le vertical | `python3 create_horizontal_logo.py` |
-| `create_visual_tests.py` | Génère des mockups de test visuel | `python3 create_visual_tests.py` |
-| `open_visual_tests.py` | Ouvre les tests visuels et le favicon | `python3 open_visual_tests.py` |
-| `organize_files.py` | Organise les fichiers anciens | `python3 organize_files.py` |
+| Script | Statut | Description | Usage |
+|--------|--------|-------------|-------|
+| `reexport_correct_colors.py` | ✅ **Principal** | Réexporte les logos avec Inkscape depuis `_SOURCE.svg` | `python3 reexport_correct_colors.py` |
+| `generate_all_logos.py` | ✅ Actif | Vérifie et génère tous les logos manquants | `python3 generate_all_logos.py` |
+| `create_horizontal_logo.py` | ✅ Actif | Crée le logo horizontal depuis le vertical | `python3 create_horizontal_logo.py` |
+| `create_visual_tests.py` | ✅ Actif | Génère des mockups de test visuel | `python3 create_visual_tests.py` |
+| `open_visual_tests.py` | ✅ Actif | Ouvre les tests visuels et le favicon | `python3 open_visual_tests.py` |
+| `extract_colors_from_svg.py` | ✅ Actif | Extrait les couleurs depuis les SVG `_SOURCE.svg` | `python3 extract_colors_from_svg.py` |
+| `optimize_images_for_github.py` | ✅ Actif | Optimise les images pour GitHub | `python3 optimize_images_for_github.py` |
+| `organize_files.py` | ✅ Actif | Organise les fichiers anciens | `python3 organize_files.py` |
 
 ### 🤖 Automatisation avec Arkalia-LUNA
 
@@ -193,8 +198,82 @@ Tous les logos sont dans : [`logo_2d/final/`](logo_2d/final/)
 
 ### Références
 
+- 📄 **[COULEURS_OFFICIELLES.md](logo_2d/final/COULEURS_OFFICIELLES.md)** - 🎨 **Palette officielle** (couleurs extraites des `_SOURCE.svg`)
 - 📄 **[README_LOGOS.md](logo_2d/final/README_LOGOS.md)** - Répertoire complet des logos
-- 📄 **[COULEURS_REELLES_LOGOS.md](logo_2d/final/COULEURS_REELLES_LOGOS.md)** - Couleurs réelles utilisées
+
+---
+
+## 🔗 QUICK LINKS
+
+<div align="center">
+
+**Liens rapides vers les ressources essentielles**
+
+| 📄 Documentation | 📊 État du projet | 🎨 Style Guide | 🤖 Automatisation |
+|-----------------|-------------------|----------------|-------------------|
+| [Style Guide One-Page](style_guide/STYLE_GUIDE_ONE_PAGE.md) | [Audit Complet](AUDIT_FINAL.md) | [Palette Couleurs](logo_2d/final/COULEURS_OFFICIELLES.md) | [Intégration Arkalia-LUNA](INTEGRATION_ARKALIA_LUNA.md) |
+| [Validation](VALIDATION_FINALE.md) | [Progression](#-progression) | [Usage Logo](style_guide/usage_logo.md) | [Activation Scripts T7](ACTIVATION_SCRIPTS_T7.md) |
+| [Solution Logo Exact](logo_2d/SOLUTION_LOGO_EXACT.md) | [Tests Visuels](logo_2d/TESTS_VISUELS_RESULTATS.md) | [Typographie](style_guide/typographie.md) | [Scripts disponibles](#️-scripts--automatisation) |
+
+</div>
+
+---
+
+## 💡 EXEMPLES D'USAGE
+
+### Utilisation dans un site web
+
+```html
+<!-- Logo Mark Only -->
+<img src="bbia_mark_only_512x512.png" alt="BBIA Logo" width="128" height="128">
+
+<!-- Logo Horizontal -->
+<img src="bbia_logo_horizontal.png" alt="BBIA Logo Horizontal" width="300">
+
+<!-- Logo Vertical -->
+<img src="bbia_logo_vertical_v2.png" alt="BBIA Logo Vertical" width="200">
+```
+
+### Utilisation comme favicon
+
+```html
+<link rel="icon" href="bbia_favicon_32x32.png" type="image/png">
+```
+
+### Utilisation avec CSS (couleurs officielles)
+
+```css
+:root {
+  --bbia-blue: #008181;
+  --bbia-white: #FFFFFF;
+  --bbia-gray-light: #CCCCCC;
+  --bbia-black-dark: #020202;
+  --bbia-black: #000000;
+}
+
+.header {
+  background-color: var(--bbia-blue);
+  color: var(--bbia-white);
+}
+```
+
+### Utilisation avec Python (PIL/Pillow)
+
+```python
+from PIL import Image
+
+# Couleurs officielles BBIA
+COLORS = {
+    "blue": (0, 129, 129),      # #008181
+    "white": (255, 255, 255),   # #FFFFFF
+    "gray_light": (204, 204, 204),  # #CCCCCC
+    "black_dark": (2, 2, 2),    # #020202
+    "black": (0, 0, 0),          # #000000
+}
+
+# Créer une image avec la couleur BBIA Blue
+img = Image.new("RGB", (100, 100), COLORS["blue"])
+```
 
 ---
 
@@ -202,16 +281,16 @@ Tous les logos sont dans : [`logo_2d/final/`](logo_2d/final/)
 
 <div align="center">
 
-| Catégorie | Statut | Progression |
-|-----------|--------|-------------|
-| **Logo 2D** | ✅ Complet | 100% |
-| **Documentation** | ✅ À jour | 100% |
-| **Style Guide** | ✅ Complet | 100% |
-| **Tests visuels** | ⚠️ À faire | 0% |
-| **Hero Render 3D** | ❌ Non commencé | 0% |
-| **Déclinaisons** | ❌ Automatisé | 0% |
+| Catégorie | Statut | Progression | Barre |
+|-----------|--------|-------------|-------|
+| **Logo 2D** | ✅ Complet | 100% | `████████████████████` |
+| **Documentation** | ✅ À jour | 100% | `████████████████████` |
+| **Style Guide** | ✅ Complet | 100% | `████████████████████` |
+| **Tests visuels** | ⚠️ À faire | 0% | `░░░░░░░░░░░░░░░░░░░░` |
+| **Hero Render 3D** | ❌ Non commencé | 0% | `░░░░░░░░░░░░░░░░░░░░` |
+| **Déclinaisons** | ❌ Automatisé | 0% | `░░░░░░░░░░░░░░░░░░░░` |
 
-**Progression globale** : **85%**
+**Progression globale** : **85%** `████████████████░░░░`
 
 </div>
 
@@ -309,13 +388,32 @@ bbia_branding/
 
 ---
 
+## 🤝 CONTRIBUTING
+
+Pour contribuer au projet BBIA Branding :
+
+1. **Lire la documentation** : Commencer par [`VALIDATION_FINALE.md`](VALIDATION_FINALE.md)
+2. **Suivre le style guide** : Respecter les couleurs officielles et les règles d'usage
+3. **Tester les logos** : Vérifier sur tous les fonds (clair, sombre, bleu)
+4. **Documenter les changements** : Mettre à jour la documentation si nécessaire
+5. **Utiliser les scripts** : Toujours utiliser les fichiers `_SOURCE.svg` pour générer les logos
+
+**Standards de qualité** :
+- ✅ Utiliser uniquement les fichiers `_SOURCE.svg` comme source
+- ✅ Générer les PNG avec Inkscape (pas cairosvg)
+- ✅ Vérifier les couleurs avec `extract_colors_from_svg.py`
+- ✅ Tester la lisibilité à 32px (favicon)
+
+---
+
 ## 📞 CONTACT & RESSOURCES
 
 **Projet** : BBIA Reachy Mini  
 **Version** : 1.0 Premium  
-**Dernière mise à jour** : 2025-11-15
+**Dernière mise à jour** : 2025-11-10
 
-**Pour commencer** : Voir [`logo_2d/SOLUTION_LOGO_EXACT.md`](logo_2d/SOLUTION_LOGO_EXACT.md)
+**Pour commencer** : Voir [`logo_2d/SOLUTION_LOGO_EXACT.md`](logo_2d/SOLUTION_LOGO_EXACT.md)  
+**Couleurs officielles** : Voir [`logo_2d/final/COULEURS_OFFICIELLES.md`](logo_2d/final/COULEURS_OFFICIELLES.md)
 
 ---
 
@@ -331,5 +429,7 @@ bbia_branding/
 
 ## 📝 NOTES
 
-Les warnings Markdown concernant le HTML inline (`<div>`, `<img>`) sont intentionnels pour améliorer l'affichage sur GitHub. Le HTML est nécessaire pour le centrage et les images dimensionnées.
-# Test
+- Les warnings Markdown concernant le HTML inline (`<div>`, `<img>`) sont intentionnels pour améliorer l'affichage sur GitHub
+- Le HTML est nécessaire pour le centrage et les images dimensionnées
+- Tous les logos sont générés depuis les fichiers `_SOURCE.svg` avec Inkscape
+- Les couleurs officielles sont extraites directement des SVG sources
