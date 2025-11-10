@@ -1,0 +1,210 @@
+#!/usr/bin/env python3
+"""
+Script pour créer des screenshots/mockups pour GitHub
+Crée des mockups visuels du logo sur différents fonds
+"""
+import os
+from pathlib import Path
+from PIL import Image, ImageDraw, ImageFont
+
+# Couleurs de fond
+COLORS = {
+    "fond_clair": "#FFFFFF",
+    "fond_sombre": "#1A1A1A",
+    "fond_turquoise": "#008181",
+    "fond_bleu": "#0066FF",
+}
+
+# Tailles des mockups
+MOCKUP_SIZES = {
+    "github_header": (1200, 400),  # Header GitHub
+    "readme_preview": (800, 600),  # Preview README
+    "favicon_browser": (400, 300),  # Favicon dans navigateur
+}
+
+
+def create_mockup(
+    background_color, logo_path, output_path, size, label, logo_size=None
+):
+    """Crée un mockup avec fond et logo"""
+    img = Image.new("RGB", size, background_color)
+    draw = ImageDraw.Draw(img)
+
+    try:
+        logo = Image.open(logo_path).convert("RGBA")
+
+        # Redimensionner le logo si nécessaire
+        if logo_size:
+            # Gérer les tuples avec None
+            if isinstance(logo_size, tuple):
+                if logo_size[0] is not None and logo_size[1] is not None:
+                    logo.thumbnail(logo_size, Image.Resampling.LANCZOS)
+                elif logo_size[0] is not None:
+                    # Redimensionner en gardant le ratio
+                    ratio = logo_size[0] / logo.size[0]
+                    new_height = int(logo.size[1] * ratio)
+                    logo = logo.resize(
+                        (logo_size[0], new_height), Image.Resampling.LANCZOS
+                    )
+                elif logo_size[1] is not None:
+                    # Redimensionner en gardant le ratio
+                    ratio = logo_size[1] / logo.size[1]
+                    new_width = int(logo.size[0] * ratio)
+                    logo = logo.resize(
+                        (new_width, logo_size[1]), Image.Resampling.LANCZOS
+                    )
+            else:
+                logo.thumbnail(logo_size, Image.Resampling.LANCZOS)
+
+        # Centrer le logo
+        x = (size[0] - logo.size[0]) // 2
+        y = (size[1] - logo.size[1]) // 2
+
+        # Coller le logo avec transparence
+        if logo.mode == "RGBA":
+            img.paste(logo, (x, y), logo)
+        else:
+            img.paste(logo, (x, y))
+
+        # Ajouter un label si nécessaire
+        if label:
+            try:
+                font = ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc", 16)
+            except (OSError, IOError):
+                font = ImageFont.load_default()
+
+            text = label
+            bbox = draw.textbbox((0, 0), text, font=font)
+            text_x = (size[0] - (bbox[2] - bbox[0])) // 2
+            text_y = size[1] - 30
+            draw.text(
+                (text_x, text_y),
+                text,
+                font=font,
+                fill=(0, 0, 0) if background_color == "#FFFFFF" else (255, 255, 255),
+            )
+
+        img.save(output_path)
+        print(f"   ✅ {os.path.basename(output_path)}")
+        return True
+    except Exception as e:
+        print(f"   ❌ Erreur: {e}")
+        return False
+
+
+def create_favicon_mockup(favicon_path, output_path):
+    """Crée un mockup du favicon dans un navigateur"""
+    size = MOCKUP_SIZES["favicon_browser"]
+    img = Image.new("RGB", size, "#F5F5F5")
+    draw = ImageDraw.Draw(img)
+
+    try:
+        # Barre de navigation du navigateur
+        draw.rectangle([(0, 0), (size[0], 40)], fill="#2D2D2D")
+        draw.rectangle([(10, 5), (30, 35)], fill="#FFFFFF")
+
+        # Favicon
+        favicon = Image.open(favicon_path).convert("RGBA")
+        favicon.thumbnail((24, 24), Image.Resampling.LANCZOS)
+        img.paste(favicon, (13, 8), favicon)
+
+        # Texte "BBIA Branding"
+        try:
+            font = ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc", 12)
+        except (OSError, IOError):
+            font = ImageFont.load_default()
+        draw.text((40, 14), "BBIA Branding", font=font, fill="#FFFFFF")
+
+        # Zone de contenu avec fonds différents
+        y_offset = 60
+        for i, (label, color) in enumerate(COLORS.items()):
+            y = y_offset + (i * 60)
+            draw.rectangle([(20, y), (size[0] - 20, y + 50)], fill=color)
+
+            # Logo centré
+            logo = Image.open(favicon_path).convert("RGBA")
+            logo.thumbnail((32, 32), Image.Resampling.LANCZOS)
+            logo_x = (size[0] - logo.size[0]) // 2
+            logo_y = y + 9
+            img.paste(logo, (logo_x, logo_y), logo)
+
+        img.save(output_path)
+        print(f"   ✅ {os.path.basename(output_path)}")
+        return True
+    except Exception as e:
+        print(f"   ❌ Erreur favicon mockup: {e}")
+        return False
+
+
+def main():
+    """Fonction principale"""
+    print("=" * 70)
+    print("📸 CRÉATION DES SCREENSHOTS POUR GITHUB")
+    print("=" * 70)
+
+    current_dir = Path(".")
+    screenshots_dir = current_dir.parent.parent / "docs" / "screenshots"
+    screenshots_dir.mkdir(parents=True, exist_ok=True)
+
+    print(f"\n📁 Dossier de sortie: {screenshots_dir}\n")
+
+    # Mockups logo sur différents fonds
+    logo_files = {
+        "bbia_mark_only_512x512.png": {"name": "mark_only", "size": (256, 256)},
+        "bbia_logo_vertical_v2.png": {
+            "name": "logo_vertical",
+            "size": (300, None),  # 300px largeur
+        },
+        "bbia_logo_horizontal.png": {
+            "name": "logo_horizontal",
+            "size": (400, None),  # 400px largeur
+        },
+    }
+
+    success_count = 0
+    total_count = 0
+
+    # Créer mockups pour chaque logo
+    for logo_file, config in logo_files.items():
+        logo_path = current_dir / logo_file
+        if not logo_path.exists():
+            print(f"⚠️  Logo non trouvé: {logo_file}")
+            continue
+
+        print(f"📄 {logo_file}:")
+
+        # Mockups sur différents fonds
+        for label, color in COLORS.items():
+            total_count += 1
+            output_file = screenshots_dir / f"{config['name']}_{label}.png"
+            if create_mockup(
+                color,
+                logo_path,
+                output_file,
+                MOCKUP_SIZES["readme_preview"],
+                f"Logo sur {label}",
+                config["size"],
+            ):
+                success_count += 1
+
+        print()
+
+    # Mockup favicon dans navigateur
+    favicon_path = current_dir / "bbia_favicon_32x32.png"
+    if favicon_path.exists():
+        total_count += 1
+        output_file = screenshots_dir / "favicon_navigateur.png"
+        if create_favicon_mockup(favicon_path, output_file):
+            success_count += 1
+
+    print("✅ Résumé:")
+    print(f"   • {success_count}/{total_count} screenshots créés")
+    print(f"   • Dossier: {screenshots_dir}")
+
+    if success_count == total_count:
+        print("\n💡 Tous les screenshots ont été créés !")
+        print("   Utilise-les dans le README pour améliorer l'affichage.")
+
+
+if __name__ == "__main__":
+    main()
