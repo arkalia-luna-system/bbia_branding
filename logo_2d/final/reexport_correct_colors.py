@@ -100,41 +100,24 @@ def main():
 
     current_dir = Path(".")
 
-    # Fichiers SVG à réexporter - UTILISER LES BONS FICHIERS SOURCE
-    # Chercher d'abord les fichiers sans _SOURCE, sinon utiliser _SOURCE
-    def find_svg_file(base_name):
-        """Trouve le bon fichier SVG (priorité: nom normal, puis _SOURCE)"""
-        if (current_dir / f"{base_name}.svg").exists():
-            return f"{base_name}.svg"
-        elif (current_dir / f"{base_name}_SOURCE.svg").exists():
-            return f"{base_name}_SOURCE.svg"
-        return None
-    
-    mark_svg = find_svg_file("bbia_mark_only_v2")
-    vertical_svg = find_svg_file("bbia_logo_vertical_v2")
-    horizontal_svg = find_svg_file("bbia_logo_horizontal")
-    
-    svg_files = {}
-    
-    if mark_svg:
-        svg_files[mark_svg] = [
+    # FICHIERS SVG SOURCES EXACTS - UTILISER UNIQUEMENT CES FICHIERS
+    svg_files = {
+        "bbia_mark_only_v2_SOURCE.svg": [
             ("bbia_mark_only_v2.png", None, None),  # Taille originale
             ("bbia_mark_only_512x512.png", 512, 512),
             ("bbia_favicon_32x32.png", 32, 32),
-        ]
-        print(f"   ✅ Mark Only: {mark_svg}")
-    
-    if vertical_svg:
-        svg_files[vertical_svg] = [
+        ],
+        "bbia_logo_vertical_v2_SOURCE.svg": [
             ("bbia_logo_vertical_v2.png", None, None),
-        ]
-        print(f"   ✅ Vertical: {vertical_svg}")
-    
-    if horizontal_svg:
-        svg_files[horizontal_svg] = [
+        ],
+        "bbia_logo_horizontal_SOURCE.svg": [
             ("bbia_logo_horizontal.png", 1024, None),  # Largeur 1024px
-        ]
-        print(f"   ✅ Horizontal: {horizontal_svg}")
+        ],
+    }
+    
+    print("   ✅ Mark Only: bbia_mark_only_v2_SOURCE.svg")
+    print("   ✅ Vertical: bbia_logo_vertical_v2_SOURCE.svg")
+    print("   ✅ Horizontal: bbia_logo_horizontal_SOURCE.svg")
 
     # Vérifier si Inkscape est disponible
     inkscape_available = False

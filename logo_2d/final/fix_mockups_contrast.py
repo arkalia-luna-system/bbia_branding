@@ -116,8 +116,8 @@ def main():
 
     if not logo_path.exists():
         print(f"⚠️  PNG non trouvé: {logo_path}")
-        # Essayer le SVG
-        svg_path = Path("bbia_mark_only_v2.svg")
+        # Utiliser EXACTEMENT le fichier SOURCE
+        svg_path = Path("bbia_mark_only_v2_SOURCE.svg")
         if svg_path.exists():
             print(f"   ✅ Utilisation du SVG: {svg_path}")
             # Convertir SVG en PNG temporaire

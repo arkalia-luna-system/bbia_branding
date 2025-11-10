@@ -174,13 +174,7 @@ def main():
             "name": "logo_vertical",
             "size": (300, None),  # 300px largeur
         },
-        # bbia_logo_horizontal.png peut ne pas exister, utiliser le SVG si disponible
-        # Chercher d'abord sans _SOURCE, puis avec _SOURCE
-        "bbia_logo_horizontal.svg": {
-            "name": "logo_horizontal",
-            "size": (400, None),  # 400px largeur
-            "is_svg": True,
-        },
+        # bbia_logo_horizontal.png peut ne pas exister, utiliser EXACTEMENT le SVG SOURCE
         "bbia_logo_horizontal_SOURCE.svg": {
             "name": "logo_horizontal",
             "size": (400, None),  # 400px largeur
@@ -196,23 +190,9 @@ def main():
         logo_path = current_dir / logo_file
         if not logo_path.exists():
             print(f"⚠️  Logo non trouvé: {logo_file}")
-            # Essayer avec une alternative
-            if logo_file == "bbia_logo_horizontal.svg":
-                # Essayer d'abord le SVG _SOURCE, puis le PNG
-                alt_path = current_dir / "bbia_logo_horizontal_SOURCE.svg"
-                if alt_path.exists():
-                    logo_path = alt_path
-                    print(f"   ✅ Utilisation alternative: {alt_path.name}")
-                else:
-                    alt_path = current_dir / "bbia_logo_horizontal.png"
-                    if alt_path.exists():
-                        logo_path = alt_path
-                        print(f"   ✅ Utilisation alternative: {alt_path.name}")
-                    else:
-                        continue
-            elif logo_file == "bbia_logo_horizontal_SOURCE.svg":
-                # Si _SOURCE n'existe pas, essayer sans _SOURCE
-                alt_path = current_dir / "bbia_logo_horizontal.svg"
+            # Pour le logo horizontal, essayer le PNG si le SVG SOURCE n'existe pas
+            if logo_file == "bbia_logo_horizontal_SOURCE.svg":
+                alt_path = current_dir / "bbia_logo_horizontal.png"
                 if alt_path.exists():
                     logo_path = alt_path
                     print(f"   ✅ Utilisation alternative: {alt_path.name}")

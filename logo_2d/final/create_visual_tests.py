@@ -99,13 +99,9 @@ def main():
 
     if not os.path.exists(logo_path):
         print(f"⚠️  PNG non trouvé: {logo_path}")
-        # Essayer le SVG (chercher d'abord sans _SOURCE, puis avec _SOURCE)
-        svg_path = None
-        if os.path.exists("bbia_mark_only_v2.svg"):
-            svg_path = "bbia_mark_only_v2.svg"
-            print(f"   ✅ Utilisation du SVG: {svg_path}")
-        elif os.path.exists("bbia_mark_only_v2_SOURCE.svg"):
-            svg_path = "bbia_mark_only_v2_SOURCE.svg"
+        # Utiliser EXACTEMENT le fichier SOURCE
+        svg_path = "bbia_mark_only_v2_SOURCE.svg"
+        if os.path.exists(svg_path):
             print(f"   ✅ Utilisation du SVG: {svg_path}")
         
         if svg_path:
@@ -125,7 +121,7 @@ def main():
                 print(f"   ❌ Erreur conversion SVG: {e}")
                 logo_path = None
         else:
-            print(f"   ⚠️  Aucun SVG Mark Only trouvé (bbia_mark_only_v2.svg ou bbia_mark_only_v2_SOURCE.svg)")
+            print(f"   ⚠️  bbia_mark_only_v2_SOURCE.svg non trouvé !")
             # Essayer le favicon
             logo_path = "bbia_favicon_32x32.png"
             if not os.path.exists(logo_path):
