@@ -323,3 +323,4 @@ bbia_branding/
 ## 📝 NOTES
 
 Les warnings Markdown concernant le HTML inline (`<div>`, `<img>`) sont intentionnels pour améliorer l'affichage sur GitHub. Le HTML est nécessaire pour le centrage et les images dimensionnées.
+# Test
