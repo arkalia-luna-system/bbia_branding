@@ -65,7 +65,8 @@
 
 | Format | Fichier | Usage |
 |--------|---------|-------|
-| SVG | `bbia_mark_only_v2.svg` | Vectoriel principal |
+| SVG | `bbia_mark_only_v2_SOURCE.svg` | Vectoriel source (fichier principal) |
+| PNG | `bbia_mark_only_v2.png` | Haute résolution (taille originale) |
 | PNG | `bbia_mark_only_512x512.png` | Web (512×512px) |
 | PNG | `bbia_favicon_32x32.png` | Favicon (32×32px) |
 
@@ -75,8 +76,8 @@
 
 | Format | Fichier | Dimensions |
 |--------|---------|------------|
-| SVG | `bbia_logo_vertical_v2.svg` | Vectoriel |
-| PNG | `bbia_logo_vertical_v2.png` | 1431×2229px |
+| SVG | `bbia_logo_vertical_v2_SOURCE.svg` | Vectoriel source (fichier principal) |
+| PNG | `bbia_logo_vertical_v2.png` | Haute résolution (taille originale) |
 
 <img src="logo_2d/final/bbia_logo_vertical_github.png" alt="BBIA Logo Vertical - Symbole et texte BBIA empilés" width="200">
 
@@ -84,8 +85,8 @@
 
 | Format | Fichier | Dimensions |
 |--------|---------|------------|
-| SVG | `bbia_logo_horizontal.svg` | Vectoriel |
-| PNG | `bbia_logo_horizontal.png` | 1024×563px |
+| SVG | `bbia_logo_horizontal_SOURCE.svg` | Vectoriel source (fichier principal) |
+| PNG | `bbia_logo_horizontal.png` | Web (1024px largeur, hauteur auto) |
 
 <img src="logo_2d/final/bbia_logo_horizontal_github.png" alt="BBIA Logo Horizontal - Symbole et texte BBIA côte à côte" width="300">
 
@@ -95,11 +96,18 @@
 
 Tous les logos sont dans : [`logo_2d/final/`](logo_2d/final/)
 
-**Fichiers principaux** :
+**Fichiers sources (SVG)** :
 
-- `bbia_mark_only_v2.svg` / `.png` - Mark Only
-- `bbia_logo_vertical_v2.svg` / `.png` - Logo vertical
-- `bbia_logo_horizontal.svg` / `.png` - Logo horizontal
+- `bbia_mark_only_v2_SOURCE.svg` - Mark Only (source)
+- `bbia_logo_vertical_v2_SOURCE.svg` - Logo vertical (source)
+- `bbia_logo_horizontal_SOURCE.svg` - Logo horizontal (source)
+
+**Fichiers finaux (PNG)** :
+
+- `bbia_mark_only_v2.png` - Mark Only haute résolution
+- `bbia_mark_only_512x512.png` - Mark Only web
+- `bbia_logo_vertical_v2.png` - Logo vertical haute résolution
+- `bbia_logo_horizontal.png` - Logo horizontal web
 - `bbia_favicon_32x32.png` - Favicon
 
 ---
@@ -240,7 +248,8 @@ cp logo_2d/final/bbia_favicon_32x32.png /path/to/your/project/favicon.png
 
 ```bash
 cd logo_2d/final
-python3 generate_all_logos.py
+# Utiliser le script de réexport avec Inkscape (génère depuis les _SOURCE.svg)
+python3 reexport_correct_colors.py
 ```
 
 ### 3. Tester visuellement

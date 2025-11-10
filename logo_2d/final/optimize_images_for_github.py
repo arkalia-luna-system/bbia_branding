@@ -129,7 +129,7 @@ def main():
                     "github": ("bbia_mark_only_github.png", (512, 512)),
                     "thumbnail": ("bbia_mark_only_thumb.png", (128, 128)),
                 }
-                print(f"   ℹ️  SVG converti en PNG pour optimisation")
+                print("   ℹ️  SVG converti en PNG pour optimisation")
             except Exception as e:
                 print(f"   ⚠️  Impossible de convertir SVG: {e}")
         else:
@@ -157,7 +157,7 @@ def main():
                     "github": ("bbia_logo_vertical_github.png", (400, None)),
                     "thumbnail": ("bbia_logo_vertical_thumb.png", (200, None)),
                 }
-                print(f"   ℹ️  SVG converti en PNG pour optimisation")
+                print("   ℹ️  SVG converti en PNG pour optimisation")
             except Exception as e:
                 print(f"   ⚠️  Impossible de convertir SVG: {e}")
         else:
@@ -185,7 +185,7 @@ def main():
                     "github": ("bbia_logo_horizontal_github.png", (600, None)),
                     "thumbnail": ("bbia_logo_horizontal_thumb.png", (300, None)),
                 }
-                print(f"   ℹ️  SVG converti en PNG pour optimisation")
+                print("   ℹ️  SVG converti en PNG pour optimisation")
             except Exception as e:
                 print(f"   ⚠️  Impossible de convertir SVG: {e}")
         else:

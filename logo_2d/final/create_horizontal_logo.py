@@ -124,7 +124,8 @@ def list_layers(svg_file):
 
 
 def create_horizontal_logo(
-    svg_file="bbia_logo_vertical_v2.svg", output_file="bbia_logo_horizontal.svg"
+    svg_file="bbia_logo_vertical_v2_SOURCE.svg",
+    output_file="bbia_logo_horizontal_SOURCE.svg",
 ):
     """Crée le logo horizontal"""
 
@@ -259,10 +260,14 @@ if __name__ == "__main__":
     )
     parser.add_argument("--list", action="store_true", help="Lister tous les calques")
     parser.add_argument(
-        "--input", default="bbia_logo_vertical_v2.svg", help="Fichier SVG d'entrée"
+        "--input",
+        default="bbia_logo_vertical_v2_SOURCE.svg",
+        help="Fichier SVG d'entrée",
     )
     parser.add_argument(
-        "--output", default="bbia_logo_horizontal.svg", help="Fichier SVG de sortie"
+        "--output",
+        default="bbia_logo_horizontal_SOURCE.svg",
+        help="Fichier SVG de sortie",
     )
 
     args = parser.parse_args()
