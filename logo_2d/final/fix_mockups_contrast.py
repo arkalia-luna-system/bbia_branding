@@ -111,11 +111,33 @@ def main():
         print(f"📁 Dossier créé: {output_dir}/")
 
     # Logo à tester (Mark Only pour les tests)
+    # Essayer d'abord le PNG, puis le SVG
     logo_path = Path("bbia_mark_only_v2.png")
 
     if not logo_path.exists():
-        print(f"❌ Logo non trouvé: {logo_path}")
-        return
+        print(f"⚠️  PNG non trouvé: {logo_path}")
+        # Essayer le SVG
+        svg_path = Path("bbia_mark_only_v2.svg")
+        if svg_path.exists():
+            print(f"   ✅ Utilisation du SVG: {svg_path}")
+            # Convertir SVG en PNG temporaire
+            try:
+                import cairosvg
+
+                logo_path = Path("bbia_mark_only_v2_temp.png")
+                with open(svg_path, "rb") as f:
+                    svg_data = f.read()
+                cairosvg.svg2png(bytestring=svg_data, write_to=str(logo_path))
+                print("   ✅ SVG converti en PNG temporaire")
+            except ImportError:
+                print("   ❌ cairosvg non installé, impossible de convertir SVG")
+                return
+            except Exception as e:
+                print(f"   ❌ Erreur conversion SVG: {e}")
+                return
+        else:
+            print(f"❌ Logo non trouvé (ni PNG ni SVG): {logo_path}")
+            return
 
     print(f"\n📸 Logo utilisé: {logo_path}")
     print(f"📁 Dossier de sortie: {output_dir}/\n")

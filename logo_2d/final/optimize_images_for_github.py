@@ -104,23 +104,84 @@ def main():
     current_dir = Path(".")
 
     # Images à optimiser
-    images_to_optimize = {
-        "bbia_mark_only_v2.png": {
+    # Utiliser SVG si PNG manquant, les convertir d'abord
+    images_to_optimize = {}
+
+    # Mark Only
+    if (current_dir / "bbia_mark_only_v2.png").exists():
+        images_to_optimize["bbia_mark_only_v2.png"] = {
             "github": ("bbia_mark_only_github.png", (512, 512)),
             "thumbnail": ("bbia_mark_only_thumb.png", (128, 128)),
-        },
-        "bbia_logo_vertical_v2.png": {
-            "github": ("bbia_logo_vertical_github.png", (400, None)),  # 400px hauteur
+        }
+    elif (current_dir / "bbia_mark_only_v2.svg").exists():
+        # Convertir SVG en PNG d'abord
+        try:
+            import cairosvg
+
+            svg_path = current_dir / "bbia_mark_only_v2.svg"
+            png_path = current_dir / "bbia_mark_only_v2.png"
+            with open(svg_path, "rb") as f:
+                svg_data = f.read()
+            cairosvg.svg2png(bytestring=svg_data, write_to=str(png_path))
+            images_to_optimize["bbia_mark_only_v2.png"] = {
+                "github": ("bbia_mark_only_github.png", (512, 512)),
+                "thumbnail": ("bbia_mark_only_thumb.png", (128, 128)),
+            }
+            print("   ℹ️  SVG converti en PNG pour optimisation")
+        except Exception as e:
+            print(f"   ⚠️  Impossible de convertir SVG: {e}")
+
+    # Logo Vertical
+    if (current_dir / "bbia_logo_vertical_v2.png").exists():
+        images_to_optimize["bbia_logo_vertical_v2.png"] = {
+            "github": ("bbia_logo_vertical_github.png", (400, None)),
             "thumbnail": ("bbia_logo_vertical_thumb.png", (200, None)),
-        },
-        "bbia_logo_horizontal.png": {
-            "github": ("bbia_logo_horizontal_github.png", (600, None)),  # 600px largeur
+        }
+    elif (current_dir / "bbia_logo_vertical_v2.svg").exists():
+        try:
+            import cairosvg
+
+            svg_path = current_dir / "bbia_logo_vertical_v2.svg"
+            png_path = current_dir / "bbia_logo_vertical_v2.png"
+            with open(svg_path, "rb") as f:
+                svg_data = f.read()
+            cairosvg.svg2png(bytestring=svg_data, write_to=str(png_path))
+            images_to_optimize["bbia_logo_vertical_v2.png"] = {
+                "github": ("bbia_logo_vertical_github.png", (400, None)),
+                "thumbnail": ("bbia_logo_vertical_thumb.png", (200, None)),
+            }
+            print("   ℹ️  SVG converti en PNG pour optimisation")
+        except Exception as e:
+            print(f"   ⚠️  Impossible de convertir SVG: {e}")
+
+    # Logo Horizontal
+    if (current_dir / "bbia_logo_horizontal.png").exists():
+        images_to_optimize["bbia_logo_horizontal.png"] = {
+            "github": ("bbia_logo_horizontal_github.png", (600, None)),
             "thumbnail": ("bbia_logo_horizontal_thumb.png", (300, None)),
-        },
-        "bbia_mark_only_512x512.png": {
+        }
+    elif (current_dir / "bbia_logo_horizontal.svg").exists():
+        try:
+            import cairosvg
+
+            svg_path = current_dir / "bbia_logo_horizontal.svg"
+            png_path = current_dir / "bbia_logo_horizontal.png"
+            with open(svg_path, "rb") as f:
+                svg_data = f.read()
+            cairosvg.svg2png(bytestring=svg_data, write_to=str(png_path))
+            images_to_optimize["bbia_logo_horizontal.png"] = {
+                "github": ("bbia_logo_horizontal_github.png", (600, None)),
+                "thumbnail": ("bbia_logo_horizontal_thumb.png", (300, None)),
+            }
+            print("   ℹ️  SVG converti en PNG pour optimisation")
+        except Exception as e:
+            print(f"   ⚠️  Impossible de convertir SVG: {e}")
+
+    # Mark Only 512x512
+    if (current_dir / "bbia_mark_only_512x512.png").exists():
+        images_to_optimize["bbia_mark_only_512x512.png"] = {
             "github": ("bbia_mark_only_512_github.png", (512, 512))
-        },
-    }
+        }
 
     print("\n📸 Optimisation des images...\n")
 

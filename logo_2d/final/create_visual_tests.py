@@ -94,15 +94,39 @@ def main():
         print(f"📁 Dossier créé: {output_dir}/")
 
     # Logo à tester (Mark Only pour les tests)
+    # Essayer d'abord le PNG, puis le SVG, puis le favicon
     logo_path = "bbia_mark_only_v2.png"
 
     if not os.path.exists(logo_path):
-        print(f"❌ Logo non trouvé: {logo_path}")
-        print("   Utilisation du favicon comme alternative...")
-        logo_path = "bbia_favicon_32x32.png"
-        if not os.path.exists(logo_path):
-            print(f"❌ Favicon non trouvé: {logo_path}")
-            return
+        print(f"⚠️  PNG non trouvé: {logo_path}")
+        # Essayer le SVG
+        svg_path = "bbia_mark_only_v2.svg"
+        if os.path.exists(svg_path):
+            print(f"   ✅ Utilisation du SVG: {svg_path}")
+            # Convertir SVG en PNG temporaire
+            try:
+                import cairosvg
+
+                logo_path = "bbia_mark_only_v2_temp.png"
+                with open(svg_path, "rb") as f:
+                    svg_data = f.read()
+                cairosvg.svg2png(bytestring=svg_data, write_to=logo_path)
+                print("   ✅ SVG converti en PNG temporaire")
+            except ImportError:
+                print("   ❌ cairosvg non installé, impossible de convertir SVG")
+                logo_path = None
+            except Exception as e:
+                print(f"   ❌ Erreur conversion SVG: {e}")
+                logo_path = None
+        else:
+            print(f"   ⚠️  SVG non trouvé: {svg_path}")
+            # Essayer le favicon
+            logo_path = "bbia_favicon_32x32.png"
+            if not os.path.exists(logo_path):
+                print("❌ Aucun logo trouvé (PNG, SVG, favicon)")
+                return
+            else:
+                print(f"   ✅ Utilisation du favicon: {logo_path}")
 
     print(f"\n📸 Logo utilisé: {logo_path}")
     print(f"📁 Dossier de sortie: {output_dir}/\n")
