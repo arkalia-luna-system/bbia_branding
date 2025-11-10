@@ -9,25 +9,21 @@ from PIL import Image
 
 
 def optimize_image(input_path, output_path, max_size=None, quality=85):
-    """Optimise une image PNG pour GitHub"""
+    """Optimise une image PNG pour GitHub en gardant la transparence"""
     try:
         img = Image.open(input_path)
 
-        # Convertir en RGB si nécessaire (pour PNG avec transparence)
-        if img.mode in ("RGBA", "LA", "P"):
-            # Créer un fond blanc pour les images avec transparence
-            background = Image.new("RGB", img.size, (255, 255, 255))
-            if img.mode == "P":
-                img = img.convert("RGBA")
-            if img.mode in ("RGBA", "LA"):
-                background.paste(
-                    img, mask=img.split()[-1] if img.mode == "RGBA" else None
-                )
-                img = background
-            else:
-                img = img.convert("RGB")
-        elif img.mode != "RGB":
-            img = img.convert("RGB")
+        # Garder la transparence si présente (RGBA, LA, P)
+        if img.mode == "P":
+            # Palette avec transparence
+            img = img.convert("RGBA")
+        elif img.mode == "LA":
+            # Niveaux de gris avec alpha
+            img = img.convert("RGBA")
+        # Si déjà RGBA, garder tel quel
+        # Si RGB, convertir en RGBA pour uniformité
+        elif img.mode == "RGB":
+            img = img.convert("RGBA")
 
         # Redimensionner si max_size spécifié
         if max_size:
@@ -50,7 +46,7 @@ def optimize_image(input_path, output_path, max_size=None, quality=85):
             else:
                 img.thumbnail(max_size, Image.Resampling.LANCZOS)
 
-        # Sauvegarder avec optimisation
+        # Sauvegarder avec optimisation en gardant la transparence
         img.save(output_path, "PNG", optimize=True, compress_level=9)
 
         original_size = os.path.getsize(input_path) / 1024  # KB
