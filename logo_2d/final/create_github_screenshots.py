@@ -24,14 +24,33 @@ MOCKUP_SIZES = {
 
 
 def create_mockup(
-    background_color, logo_path, output_path, size, label, logo_size=None
+    background_color, logo_path, output_path, size, label, logo_size=None, is_svg=False
 ):
     """Crée un mockup avec fond et logo"""
     img = Image.new("RGB", size, background_color)
     draw = ImageDraw.Draw(img)
 
     try:
-        logo = Image.open(logo_path).convert("RGBA")
+        # Si c'est un SVG, utiliser cairosvg pour le convertir
+        if is_svg or str(logo_path).endswith(".svg"):
+            try:
+                import cairosvg
+
+                # Convertir SVG en PNG en mémoire
+                with open(logo_path, "rb") as f:
+                    svg_data = f.read()
+                import io
+
+                png_data = cairosvg.svg2png(bytestring=svg_data)
+                logo = Image.open(io.BytesIO(png_data)).convert("RGBA")
+            except ImportError:
+                print(f"   ⚠️  cairosvg non installé, impossible de traiter {logo_path}")
+                return False
+            except Exception as e:
+                print(f"   ⚠️  Erreur conversion SVG: {e}")
+                return False
+        else:
+            logo = Image.open(logo_path).convert("RGBA")
 
         # Redimensionner le logo si nécessaire
         if logo_size:
@@ -155,9 +174,11 @@ def main():
             "name": "logo_vertical",
             "size": (300, None),  # 300px largeur
         },
-        "bbia_logo_horizontal.png": {
+        # bbia_logo_horizontal.png peut ne pas exister, utiliser le SVG si disponible
+        "bbia_logo_horizontal.svg": {
             "name": "logo_horizontal",
             "size": (400, None),  # 400px largeur
+            "is_svg": True,
         },
     }
 
@@ -169,7 +190,17 @@ def main():
         logo_path = current_dir / logo_file
         if not logo_path.exists():
             print(f"⚠️  Logo non trouvé: {logo_file}")
-            continue
+            # Essayer avec une alternative
+            if logo_file == "bbia_logo_horizontal.svg":
+                # Essayer le PNG si le SVG n'existe pas
+                alt_path = current_dir / "bbia_logo_horizontal.png"
+                if alt_path.exists():
+                    logo_path = alt_path
+                    print(f"   ✅ Utilisation alternative: {alt_path.name}")
+                else:
+                    continue
+            else:
+                continue
 
         print(f"📄 {logo_file}:")
 
@@ -177,6 +208,7 @@ def main():
         for label, color in COLORS.items():
             total_count += 1
             output_file = screenshots_dir / f"{config['name']}_{label}.png"
+            is_svg = config.get("is_svg", False) or str(logo_path).endswith(".svg")
             if create_mockup(
                 color,
                 logo_path,
@@ -184,6 +216,7 @@ def main():
                 MOCKUP_SIZES["readme_preview"],
                 f"Logo sur {label}",
                 config["size"],
+                is_svg=is_svg,
             ):
                 success_count += 1
 
