@@ -119,7 +119,7 @@ def main():
                 print(f"   ❌ Erreur conversion SVG: {e}")
                 logo_path = None
         else:
-            print(f"   ⚠️  bbia_mark_only_v2_SOURCE.svg non trouvé !")
+            print("   ⚠️  bbia_mark_only_v2_SOURCE.svg non trouvé !")
             # Essayer le favicon
             logo_path = "bbia_favicon_32x32.png"
             if not os.path.exists(logo_path):

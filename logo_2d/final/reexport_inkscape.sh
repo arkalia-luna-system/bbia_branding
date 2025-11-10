@@ -58,19 +58,19 @@ export_inkscape() {
     fi
 }
 
-# Exports
-echo "📄 bbia_mark_only_v2.svg:"
-export_inkscape "bbia_mark_only_v2.svg" "bbia_mark_only_v2.png" "" ""
-export_inkscape "bbia_mark_only_v2.svg" "bbia_mark_only_512x512.png" "512" "512"
-export_inkscape "bbia_mark_only_v2.svg" "bbia_favicon_32x32.png" "32" "32"
+# Exports - UTILISER UNIQUEMENT LES FICHIERS _SOURCE
+echo "📄 bbia_mark_only_v2_SOURCE.svg:"
+export_inkscape "bbia_mark_only_v2_SOURCE.svg" "bbia_mark_only_v2.png" "" ""
+export_inkscape "bbia_mark_only_v2_SOURCE.svg" "bbia_mark_only_512x512.png" "512" "512"
+export_inkscape "bbia_mark_only_v2_SOURCE.svg" "bbia_favicon_32x32.png" "32" "32"
 echo ""
 
-echo "📄 bbia_logo_vertical_v2.svg:"
-export_inkscape "bbia_logo_vertical_v2.svg" "bbia_logo_vertical_v2.png" "" ""
+echo "📄 bbia_logo_vertical_v2_SOURCE.svg:"
+export_inkscape "bbia_logo_vertical_v2_SOURCE.svg" "bbia_logo_vertical_v2.png" "" ""
 echo ""
 
-echo "📄 bbia_logo_horizontal.svg:"
-export_inkscape "bbia_logo_horizontal.svg" "bbia_logo_horizontal.png" "1024" ""
+echo "📄 bbia_logo_horizontal_SOURCE.svg:"
+export_inkscape "bbia_logo_horizontal_SOURCE.svg" "bbia_logo_horizontal.png" "1024" ""
 echo ""
 
 echo "✅ Tous les fichiers ont été réexportés avec Inkscape !"

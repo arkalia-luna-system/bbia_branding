@@ -14,17 +14,17 @@ def check_missing_logos():
     """Vérifie quels logos manquent"""
     required = {
         "mark_only": {
-            "svg": "bbia_mark_only_v2.svg",
+            "svg": "bbia_mark_only_v2_SOURCE.svg",
             "png": "bbia_mark_only_v2.png",
             "png_512": "bbia_mark_only_512x512.png",
             "favicon": "bbia_favicon_32x32.png",
         },
         "vertical": {
-            "svg": "bbia_logo_vertical_v2.svg",
+            "svg": "bbia_logo_vertical_v2_SOURCE.svg",
             "png": "bbia_logo_vertical_v2.png",
         },
         "horizontal": {
-            "svg": "bbia_logo_horizontal.svg",
+            "svg": "bbia_logo_horizontal_SOURCE.svg",
             "png": "bbia_logo_horizontal.png",
         },
     }

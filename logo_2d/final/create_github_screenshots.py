@@ -168,11 +168,19 @@ def main():
     print(f"\n📁 Dossier de sortie: {screenshots_dir}\n")
 
     # Mockups logo sur différents fonds
+    # Utiliser les PNG finaux (générés depuis les _SOURCE) ou les SVG SOURCE directement
     logo_files = {
         "bbia_mark_only_512x512.png": {"name": "mark_only", "size": (256, 256)},
+        # Essayer d'abord le PNG, sinon utiliser le SVG SOURCE
         "bbia_logo_vertical_v2.png": {
             "name": "logo_vertical",
             "size": (300, None),  # 300px largeur
+        },
+        "bbia_logo_vertical_v2_SOURCE.svg": {
+            "name": "logo_vertical",
+            "size": (300, None),
+            "is_svg": True,
+            "is_fallback": True,  # Utilisé seulement si PNG n'existe pas
         },
         # bbia_logo_horizontal.png peut ne pas exister, utiliser EXACTEMENT le SVG SOURCE
         "bbia_logo_horizontal_SOURCE.svg": {
@@ -186,7 +194,16 @@ def main():
     total_count = 0
 
     # Créer mockups pour chaque logo
+    # Éviter les doublons : si PNG existe, ignorer le fallback SVG
+    processed_names = set()
+
     for logo_file, config in logo_files.items():
+        # Ignorer les fallbacks si le fichier principal existe déjà
+        if config.get("is_fallback"):
+            main_file = logo_file.replace("_SOURCE.svg", ".png")
+            if (current_dir / main_file).exists():
+                continue  # PNG existe, ignorer le fallback SVG
+
         logo_path = current_dir / logo_file
         if not logo_path.exists():
             print(f"⚠️  Logo non trouvé: {logo_file}")
@@ -198,8 +215,24 @@ def main():
                     print(f"   ✅ Utilisation alternative: {alt_path.name}")
                 else:
                     continue
+            # Pour le logo vertical, essayer le SVG SOURCE si le PNG n'existe pas
+            elif logo_file == "bbia_logo_vertical_v2.png":
+                alt_path = current_dir / "bbia_logo_vertical_v2_SOURCE.svg"
+                if alt_path.exists():
+                    logo_path = alt_path
+                    config["is_svg"] = True
+                    print(
+                        f"   ✅ Utilisation alternative (SVG SOURCE): {alt_path.name}"
+                    )
+                else:
+                    continue
             else:
                 continue
+
+        # Éviter de traiter deux fois le même logo (PNG + fallback SVG)
+        if config["name"] in processed_names:
+            continue
+        processed_names.add(config["name"])
 
         print(f"📄 {logo_file}:")
 

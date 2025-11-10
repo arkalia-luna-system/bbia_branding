@@ -54,3 +54,4 @@ Thumbs.db
 *_temp.jpg
 *_test.png
 
+__pycache__/

@@ -17,24 +17,31 @@ def reexport_with_inkscape(svg_file, output_png, width=None, height=None):
         print(f"❌ SVG non trouvé: {svg_path}")
         return False
 
-    # Commande Inkscape pour exporter en PNG
+    # Commande Inkscape pour exporter en PNG avec les BONS paramètres
+    # Utiliser le chemin Inkscape trouvé (peut être dans T7)
+    inkscape_exec = getattr(reexport_with_inkscape, "inkscape_path", "inkscape")
     cmd = [
-        "inkscape",
+        inkscape_exec,
         str(svg_path),
         "--export-type=png",
         f"--export-filename={png_path}",
-        "--export-background=white",  # Fond blanc pour transparence
         "--export-background-opacity=0",  # Transparence
+        "--export-dpi=96",  # DPI standard
+        "--export-area-page",  # IMPORTANT : exporter la page entière (pas le dessin)
     ]
 
     # Ajouter les dimensions si spécifiées
-    if width:
+    if width and height:
         cmd.append(f"--export-width={width}")
-    if height:
         cmd.append(f"--export-height={height}")
+    elif width:
+        cmd.append(f"--export-width={width}")
+    # Si aucune dimension, Inkscape utilise la taille de la page
 
     try:
-        print(f"📸 Export: {svg_path.name} → {png_path.name}")
+        print(f"📸 Export Inkscape: {svg_path.name} → {png_path.name}")
+        if width:
+            print(f"   Taille: {width}x{height if height else 'auto'}")
         subprocess.run(cmd, capture_output=True, text=True, check=True)
         print("   ✅ Export réussi")
         return True
@@ -43,53 +50,12 @@ def reexport_with_inkscape(svg_file, output_png, width=None, height=None):
         return False
     except FileNotFoundError:
         print("   ❌ Inkscape non trouvé dans le PATH")
-        print("   💡 Utilisez cairosvg comme alternative")
+        print("   ⚠️  Inkscape est OBLIGATOIRE pour générer les bons logos")
+        print("   💡 Installez Inkscape ou exportez manuellement depuis Inkscape")
         return False
 
 
-def reexport_with_cairosvg(svg_file, output_png, width=None, height=None):
-    """Réexporte un SVG en PNG avec cairosvg (alternative)"""
-    try:
-        import cairosvg
-    except ImportError:
-        print("❌ cairosvg non installé")
-        print("   Installer avec: pip install cairosvg")
-        return False
-
-    svg_path = Path(svg_file).absolute()
-    png_path = Path(output_png).absolute()
-
-    if not svg_path.exists():
-        print(f"❌ SVG non trouvé: {svg_path}")
-        return False
-
-    try:
-        print(f"📸 Export (cairosvg): {svg_path.name} → {png_path.name}")
-
-        # Lire le SVG
-        with open(svg_path, "rb") as f:
-            svg_data = f.read()
-
-        # Exporter en PNG
-        if width and height:
-            cairosvg.svg2png(
-                bytestring=svg_data,
-                write_to=str(png_path),
-                output_width=width,
-                output_height=height,
-            )
-        elif width:
-            cairosvg.svg2png(
-                bytestring=svg_data, write_to=str(png_path), output_width=width
-            )
-        else:
-            cairosvg.svg2png(bytestring=svg_data, write_to=str(png_path))
-
-        print("   ✅ Export réussi")
-        return True
-    except Exception as e:
-        print(f"   ❌ Erreur: {e}")
-        return False
+# Fonction cairosvg supprimée - Inkscape est OBLIGATOIRE pour les bons logos
 
 
 def main():
@@ -114,24 +80,62 @@ def main():
             ("bbia_logo_horizontal.png", 1024, None),  # Largeur 1024px
         ],
     }
-    
+
     print("   ✅ Mark Only: bbia_mark_only_v2_SOURCE.svg")
     print("   ✅ Vertical: bbia_logo_vertical_v2_SOURCE.svg")
     print("   ✅ Horizontal: bbia_logo_horizontal_SOURCE.svg")
 
-    # Vérifier si Inkscape est disponible
-    inkscape_available = False
-    try:
-        result = subprocess.run(
-            ["inkscape", "--version"], capture_output=True, text=True
-        )
-        if result.returncode == 0:
-            inkscape_available = True
-            print(f"✅ Inkscape trouvé: {result.stdout.strip()}")
-    except FileNotFoundError:
-        print("⚠️  Inkscape non trouvé, utilisation de cairosvg")
+    # Vérifier si Inkscape est disponible (OBLIGATOIRE)
+    # Chercher Inkscape dans plusieurs emplacements
+    inkscape_paths = [
+        "inkscape",  # Dans le PATH
+        "/opt/homebrew/bin/inkscape",  # Homebrew
+        "/Volumes/T7/Applications/Graphics/Inkscape/Inkscape.app/Contents/MacOS/inkscape",  # T7
+        "/Applications/Inkscape.app/Contents/MacOS/inkscape",  # Applications standard
+    ]
 
-    print("\n📸 Réexport des fichiers...\n")
+    inkscape_cmd = None
+    inkscape_available = False
+
+    for path in inkscape_paths:
+        try:
+            if path == "inkscape":
+                # Vérifier dans le PATH
+                result = subprocess.run(
+                    [path, "--version"], capture_output=True, text=True, timeout=5
+                )
+            else:
+                # Vérifier le chemin absolu
+                if os.path.exists(path):
+                    result = subprocess.run(
+                        [path, "--version"], capture_output=True, text=True, timeout=5
+                    )
+                else:
+                    continue
+
+            if result.returncode == 0:
+                inkscape_cmd = path
+                inkscape_available = True
+                print(f"✅ Inkscape trouvé: {result.stdout.strip()}")
+                print(f"   Chemin: {path}")
+                break
+        except (FileNotFoundError, subprocess.TimeoutExpired, OSError):
+            continue
+
+    if not inkscape_available:
+        print("❌ Inkscape non trouvé")
+        print("⚠️  Inkscape est OBLIGATOIRE pour générer les bons logos")
+        print("💡 Emplacements vérifiés:")
+        for p in inkscape_paths:
+            print(f"   - {p}")
+        print("\n💡 Installez Inkscape ou exportez manuellement depuis Inkscape")
+        return
+
+    if not inkscape_available:
+        print("\n❌ Impossible de continuer sans Inkscape")
+        return
+
+    print("\n📸 Réexport des fichiers avec Inkscape...\n")
 
     success_count = 0
     total_count = 0
@@ -149,12 +153,11 @@ def main():
             total_count += 1
             png_path = current_dir / png_file
 
-            if inkscape_available:
-                if reexport_with_inkscape(svg_path, png_path, width, height):
-                    success_count += 1
-            else:
-                if reexport_with_cairosvg(svg_path, png_path, width, height):
-                    success_count += 1
+            # UTILISER UNIQUEMENT INKSCAPE (pas cairosvg)
+            # Passer le chemin Inkscape trouvé à la fonction
+            reexport_with_inkscape.inkscape_path = inkscape_cmd
+            if reexport_with_inkscape(svg_path, png_path, width, height):
+                success_count += 1
 
         print()
 
