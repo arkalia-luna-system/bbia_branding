@@ -93,40 +93,84 @@ def main():
         os.makedirs(output_dir)
         print(f"📁 Dossier créé: {output_dir}/")
 
-    # Logo à tester (Mark Only pour les tests)
-    # Essayer d'abord le PNG, puis le SVG, puis le favicon
-    logo_path = "bbia_mark_only_v2.png"
+    # Logo à tester - UTILISER UNIQUEMENT LES FICHIERS _SOURCE.svg
+    # Priorité : PNG existant > SVG SOURCE (converti avec Inkscape) > favicon
+    logo_path = None
+    svg_source = "bbia_mark_only_v2_SOURCE.svg"
 
-    if not os.path.exists(logo_path):
-        print(f"⚠️  PNG non trouvé: {logo_path}")
-        # Utiliser EXACTEMENT le fichier SOURCE
-        svg_path = "bbia_mark_only_v2_SOURCE.svg"
-        if os.path.exists(svg_path):
-            print(f"   ✅ Utilisation du SVG: {svg_path}")
-            # Convertir SVG en PNG temporaire
+    # Essayer d'abord le PNG existant
+    if os.path.exists("bbia_mark_only_v2.png"):
+        logo_path = "bbia_mark_only_v2.png"
+        print(f"   ✅ Utilisation du PNG existant: {logo_path}")
+    # Sinon utiliser le SVG SOURCE avec Inkscape
+    elif os.path.exists(svg_source):
+        print(f"   ✅ Utilisation du SVG SOURCE: {svg_source}")
+        # Convertir avec Inkscape
+        import subprocess
+
+        temp_png = "bbia_mark_only_v2_temp.png"
+
+        # Chercher Inkscape
+        inkscape_paths = [
+            "inkscape",
+            "/opt/homebrew/bin/inkscape",
+            "/Volumes/T7/Applications/Graphics/Inkscape/Inkscape.app/Contents/MacOS/inkscape",
+            "/Applications/Inkscape.app/Contents/MacOS/inkscape",
+        ]
+
+        inkscape_cmd = None
+        for path in inkscape_paths:
             try:
-                import cairosvg
+                if path == "inkscape":
+                    result = subprocess.run(
+                        [path, "--version"], capture_output=True, text=True, timeout=5
+                    )
+                else:
+                    if os.path.exists(path):
+                        result = subprocess.run(
+                            [path, "--version"],
+                            capture_output=True,
+                            text=True,
+                            timeout=5,
+                        )
+                    else:
+                        continue
+                if result.returncode == 0:
+                    inkscape_cmd = path
+                    break
+            except (FileNotFoundError, subprocess.TimeoutExpired, OSError):
+                continue
 
-                logo_path = "bbia_mark_only_v2_temp.png"
-                with open(svg_path, "rb") as f:
-                    svg_data = f.read()
-                cairosvg.svg2png(bytestring=svg_data, write_to=logo_path)
-                print("   ✅ SVG converti en PNG temporaire")
-            except ImportError:
-                print("   ❌ cairosvg non installé, impossible de convertir SVG")
-                logo_path = None
+        if inkscape_cmd:
+            try:
+                cmd = [
+                    inkscape_cmd,
+                    svg_source,
+                    "--export-type=png",
+                    f"--export-filename={temp_png}",
+                    "--export-background-opacity=0",
+                    "--export-dpi=96",
+                    "--export-area-page",
+                    "--export-width=512",
+                ]
+                subprocess.run(cmd, capture_output=True, text=True, check=True)
+                logo_path = temp_png
+                print(f"   ✅ SVG converti en PNG avec Inkscape: {temp_png}")
             except Exception as e:
-                print(f"   ❌ Erreur conversion SVG: {e}")
+                print(f"   ❌ Erreur conversion Inkscape: {e}")
                 logo_path = None
         else:
-            print("   ⚠️  bbia_mark_only_v2_SOURCE.svg non trouvé !")
-            # Essayer le favicon
+            print("   ❌ Inkscape non trouvé, impossible de convertir SVG")
+            logo_path = None
+    else:
+        print(f"   ⚠️  {svg_source} non trouvé !")
+        # Essayer le favicon en dernier recours
+        if os.path.exists("bbia_favicon_32x32.png"):
             logo_path = "bbia_favicon_32x32.png"
-            if not os.path.exists(logo_path):
-                print("❌ Aucun logo trouvé (PNG, SVG, favicon)")
-                return
-            else:
-                print(f"   ✅ Utilisation du favicon: {logo_path}")
+            print(f"   ✅ Utilisation du favicon: {logo_path}")
+        else:
+            print("❌ Aucun logo trouvé (PNG, SVG SOURCE, favicon)")
+            return
 
     print(f"\n📸 Logo utilisé: {logo_path}")
     print(f"📁 Dossier de sortie: {output_dir}/\n")

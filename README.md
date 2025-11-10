@@ -52,8 +52,8 @@
 - ✅ **Style Guide professionnel** (palette, typographie, usage)
 - ✅ **Scripts d'automatisation** Python
 - ✅ **Documentation exhaustive** (15+ guides)
-- ✅ **10 logos créés** (Mark Only, Vertical, Horizontal, Favicon)
-- ✅ **85% progression** (Logo 2D 100% complet)
+- ✅ **5 logos créés** (Mark Only, Vertical, Horizontal, Favicon)
+- ✅ **90% progression** (Logo 2D, Documentation, Style Guide, Tests visuels complets)
 
 ---
 
@@ -112,6 +112,49 @@ Tous les logos sont dans : [`logo_2d/final/`](logo_2d/final/)
 - `bbia_logo_horizontal.png` - Logo horizontal web
 - `bbia_favicon_32x32.png` - Favicon
 
+### 🎨 Tests visuels sur différents fonds
+
+<div align="center">
+
+**Logo Mark Only testé sur différents fonds et formats pour vérifier la lisibilité**
+
+#### Mockups simples (4 fonds)
+
+| Fond Blanc | Fond Noir Foncé | Fond Bleu BBIA | Fond Noir Pur |
+|------------|-----------------|----------------|---------------|
+| <img src="logo_2d/final/tests_visuels/mockup_fond_clair.png" alt="Logo sur fond blanc" width="150"> | <img src="logo_2d/final/tests_visuels/mockup_fond_sombre.png" alt="Logo sur fond noir foncé" width="150"> | <img src="logo_2d/final/tests_visuels/mockup_fond_bleu.png" alt="Logo sur fond bleu" width="150"> | <img src="logo_2d/final/tests_visuels/mockup_fond_noir.png" alt="Logo sur fond noir" width="150"> |
+| `#FFFFFF` | `#020202` | `#008181` | `#000000` |
+
+#### Mockups améliorés (formats variés)
+
+**Format Card (400×300)** - Pour cartes et vignettes
+
+| Fond Blanc | Fond Bleu | Fond Noir |
+|------------|-----------|-----------|
+| <img src="logo_2d/final/tests_visuels/mockup_fond_clair_card.png" alt="Card blanc" width="150"> | <img src="logo_2d/final/tests_visuels/mockup_fond_bleu_card.png" alt="Card bleu" width="150"> | <img src="logo_2d/final/tests_visuels/mockup_fond_noir_card.png" alt="Card noir" width="150"> |
+
+**Format Banner (800×200)** - Pour en-têtes et bannières
+
+| Fond Blanc | Fond Bleu | Fond Noir |
+|------------|-----------|-----------|
+| <img src="logo_2d/final/tests_visuels/mockup_fond_clair_banner.png" alt="Banner blanc" width="200"> | <img src="logo_2d/final/tests_visuels/mockup_fond_bleu_banner.png" alt="Banner bleu" width="200"> | <img src="logo_2d/final/tests_visuels/mockup_fond_noir_banner.png" alt="Banner noir" width="200"> |
+
+**Format Badge (300×300)** - Pour badges et icônes circulaires
+
+| Fond Blanc | Fond Bleu | Fond Gris |
+|------------|-----------|-----------|
+| <img src="logo_2d/final/tests_visuels/mockup_fond_clair_badge.png" alt="Badge blanc" width="120"> | <img src="logo_2d/final/tests_visuels/mockup_fond_bleu_badge.png" alt="Badge bleu" width="120"> | <img src="logo_2d/final/tests_visuels/mockup_fond_gris_badge.png" alt="Badge gris" width="120"> |
+
+**✅ Tous les mockups utilisent le logo depuis `bbia_mark_only_v2_SOURCE.svg`**
+
+**📊 Total : 25 mockups** (5 formats × 5 fonds)
+
+</div>
+
+> **💡 Générer les mockups** :
+> - **Mockups simples** : `cd logo_2d/final && python3 create_visual_tests.py`
+> - **Mockups améliorés** : `cd logo_2d/final && python3 create_enhanced_mockups.py`
+
 ---
 
 ## 📐 STYLE GUIDE
@@ -156,7 +199,8 @@ Tous les logos sont dans : [`logo_2d/final/`](logo_2d/final/)
 | `reexport_correct_colors.py` | ✅ **Principal** | Réexporte les logos avec Inkscape depuis `_SOURCE.svg` | `python3 reexport_correct_colors.py` |
 | `generate_all_logos.py` | ✅ Actif | Vérifie et génère tous les logos manquants | `python3 generate_all_logos.py` |
 | `create_horizontal_logo.py` | ✅ Actif | Crée le logo horizontal depuis le vertical | `python3 create_horizontal_logo.py` |
-| `create_visual_tests.py` | ✅ Actif | Génère des mockups de test visuel | `python3 create_visual_tests.py` |
+| `create_visual_tests.py` | ✅ Actif | Génère des mockups simples (4 fonds) | `python3 create_visual_tests.py` |
+| `create_enhanced_mockups.py` | ✅ **Amélioré** | Génère des mockups professionnels (25 variantes) | `python3 create_enhanced_mockups.py` |
 | `open_visual_tests.py` | ✅ Actif | Ouvre les tests visuels et le favicon | `python3 open_visual_tests.py` |
 | `extract_colors_from_svg.py` | ✅ Actif | Extrait les couleurs depuis les SVG `_SOURCE.svg` | `python3 extract_colors_from_svg.py` |
 | `optimize_images_for_github.py` | ✅ Actif | Optimise les images pour GitHub | `python3 optimize_images_for_github.py` |
@@ -286,11 +330,11 @@ img = Image.new("RGB", (100, 100), COLORS["blue"])
 | **Logo 2D** | ✅ Complet | 100% | `████████████████████` |
 | **Documentation** | ✅ À jour | 100% | `████████████████████` |
 | **Style Guide** | ✅ Complet | 100% | `████████████████████` |
-| **Tests visuels** | ⚠️ À faire | 0% | `░░░░░░░░░░░░░░░░░░░░` |
+| **Tests visuels** | ✅ Complet | 100% | `████████████████████` |
 | **Hero Render 3D** | ❌ Non commencé | 0% | `░░░░░░░░░░░░░░░░░░░░` |
 | **Déclinaisons** | ❌ Automatisé | 0% | `░░░░░░░░░░░░░░░░░░░░` |
 
-**Progression globale** : **85%** `████████████████░░░░`
+**Progression globale** : **90%** `██████████████████░░`
 
 </div>
 
@@ -302,10 +346,10 @@ img = Image.new("RGB", (100, 100), COLORS["blue"])
 - ✅ Style Guide complet
 - ✅ Documentation exhaustive (15+ guides)
 - ✅ Scripts d'automatisation préparés
+- ✅ Tests visuels complets (29 mockups sur différents fonds et formats)
 
 ### ⏳ À faire
 
-- [ ] Tests visuels manuels (30 min)
 - [ ] Hero Render 3D (15h)
 - [ ] Déclinaisons dimensionnelles (automatisées quand dans T7)
 
@@ -335,6 +379,10 @@ python3 reexport_correct_colors.py
 
 ```bash
 cd logo_2d/final
+# Créer les mockups de test sur différents fonds
+python3 create_visual_tests.py
+
+# Ouvrir les tests visuels dans le navigateur
 python3 open_visual_tests.py
 ```
 
