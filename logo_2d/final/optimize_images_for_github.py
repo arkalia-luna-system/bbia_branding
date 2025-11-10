@@ -107,75 +107,111 @@ def main():
     # Utiliser SVG si PNG manquant, les convertir d'abord
     images_to_optimize = {}
 
-    # Mark Only
+    # Mark Only - UTILISER LE BON FICHIER SVG SOURCE
+    # Chercher d'abord le PNG, sinon chercher les SVG dans cet ordre :
+    # 1. bbia_mark_only_v2.svg (fichier principal)
+    # 2. bbia_mark_only_v2_SOURCE.svg (fichier source renommé)
     if (current_dir / "bbia_mark_only_v2.png").exists():
         images_to_optimize["bbia_mark_only_v2.png"] = {
             "github": ("bbia_mark_only_github.png", (512, 512)),
             "thumbnail": ("bbia_mark_only_thumb.png", (128, 128)),
         }
-    elif (current_dir / "bbia_mark_only_v2.svg").exists():
-        # Convertir SVG en PNG d'abord
-        try:
-            import cairosvg
-
+    else:
+        # Chercher le bon SVG
+        svg_path = None
+        if (current_dir / "bbia_mark_only_v2.svg").exists():
             svg_path = current_dir / "bbia_mark_only_v2.svg"
-            png_path = current_dir / "bbia_mark_only_v2.png"
-            with open(svg_path, "rb") as f:
-                svg_data = f.read()
-            cairosvg.svg2png(bytestring=svg_data, write_to=str(png_path))
-            images_to_optimize["bbia_mark_only_v2.png"] = {
-                "github": ("bbia_mark_only_github.png", (512, 512)),
-                "thumbnail": ("bbia_mark_only_thumb.png", (128, 128)),
-            }
-            print("   ℹ️  SVG converti en PNG pour optimisation")
-        except Exception as e:
-            print(f"   ⚠️  Impossible de convertir SVG: {e}")
+            print("   ✅ Utilisation: bbia_mark_only_v2.svg")
+        elif (current_dir / "bbia_mark_only_v2_SOURCE.svg").exists():
+            svg_path = current_dir / "bbia_mark_only_v2_SOURCE.svg"
+            print("   ✅ Utilisation: bbia_mark_only_v2_SOURCE.svg")
+        
+        if svg_path:
+            # Convertir SVG en PNG d'abord
+            try:
+                import cairosvg
 
-    # Logo Vertical
+                png_path = current_dir / "bbia_mark_only_v2.png"
+                with open(svg_path, "rb") as f:
+                    svg_data = f.read()
+                cairosvg.svg2png(bytestring=svg_data, write_to=str(png_path))
+                images_to_optimize["bbia_mark_only_v2.png"] = {
+                    "github": ("bbia_mark_only_github.png", (512, 512)),
+                    "thumbnail": ("bbia_mark_only_thumb.png", (128, 128)),
+                }
+                print(f"   ℹ️  SVG converti en PNG pour optimisation")
+            except Exception as e:
+                print(f"   ⚠️  Impossible de convertir SVG: {e}")
+        else:
+            print("   ❌ Aucun fichier SVG Mark Only trouvé !")
+
+    # Logo Vertical - UTILISER LE BON FICHIER SVG SOURCE
     if (current_dir / "bbia_logo_vertical_v2.png").exists():
         images_to_optimize["bbia_logo_vertical_v2.png"] = {
             "github": ("bbia_logo_vertical_github.png", (400, None)),
             "thumbnail": ("bbia_logo_vertical_thumb.png", (200, None)),
         }
-    elif (current_dir / "bbia_logo_vertical_v2.svg").exists():
-        try:
-            import cairosvg
-
+    else:
+        # Chercher le bon SVG
+        svg_path = None
+        if (current_dir / "bbia_logo_vertical_v2.svg").exists():
             svg_path = current_dir / "bbia_logo_vertical_v2.svg"
-            png_path = current_dir / "bbia_logo_vertical_v2.png"
-            with open(svg_path, "rb") as f:
-                svg_data = f.read()
-            cairosvg.svg2png(bytestring=svg_data, write_to=str(png_path))
-            images_to_optimize["bbia_logo_vertical_v2.png"] = {
-                "github": ("bbia_logo_vertical_github.png", (400, None)),
-                "thumbnail": ("bbia_logo_vertical_thumb.png", (200, None)),
-            }
-            print("   ℹ️  SVG converti en PNG pour optimisation")
-        except Exception as e:
-            print(f"   ⚠️  Impossible de convertir SVG: {e}")
+            print("   ✅ Utilisation: bbia_logo_vertical_v2.svg")
+        elif (current_dir / "bbia_logo_vertical_v2_SOURCE.svg").exists():
+            svg_path = current_dir / "bbia_logo_vertical_v2_SOURCE.svg"
+            print("   ✅ Utilisation: bbia_logo_vertical_v2_SOURCE.svg")
+        
+        if svg_path:
+            try:
+                import cairosvg
 
-    # Logo Horizontal
+                png_path = current_dir / "bbia_logo_vertical_v2.png"
+                with open(svg_path, "rb") as f:
+                    svg_data = f.read()
+                cairosvg.svg2png(bytestring=svg_data, write_to=str(png_path))
+                images_to_optimize["bbia_logo_vertical_v2.png"] = {
+                    "github": ("bbia_logo_vertical_github.png", (400, None)),
+                    "thumbnail": ("bbia_logo_vertical_thumb.png", (200, None)),
+                }
+                print(f"   ℹ️  SVG converti en PNG pour optimisation")
+            except Exception as e:
+                print(f"   ⚠️  Impossible de convertir SVG: {e}")
+        else:
+            print("   ❌ Aucun fichier SVG Vertical trouvé !")
+
+    # Logo Horizontal - UTILISER LE BON FICHIER SVG SOURCE
     if (current_dir / "bbia_logo_horizontal.png").exists():
         images_to_optimize["bbia_logo_horizontal.png"] = {
             "github": ("bbia_logo_horizontal_github.png", (600, None)),
             "thumbnail": ("bbia_logo_horizontal_thumb.png", (300, None)),
         }
-    elif (current_dir / "bbia_logo_horizontal.svg").exists():
-        try:
-            import cairosvg
-
+    else:
+        # Chercher le bon SVG
+        svg_path = None
+        if (current_dir / "bbia_logo_horizontal.svg").exists():
             svg_path = current_dir / "bbia_logo_horizontal.svg"
-            png_path = current_dir / "bbia_logo_horizontal.png"
-            with open(svg_path, "rb") as f:
-                svg_data = f.read()
-            cairosvg.svg2png(bytestring=svg_data, write_to=str(png_path))
-            images_to_optimize["bbia_logo_horizontal.png"] = {
-                "github": ("bbia_logo_horizontal_github.png", (600, None)),
-                "thumbnail": ("bbia_logo_horizontal_thumb.png", (300, None)),
-            }
-            print("   ℹ️  SVG converti en PNG pour optimisation")
-        except Exception as e:
-            print(f"   ⚠️  Impossible de convertir SVG: {e}")
+            print("   ✅ Utilisation: bbia_logo_horizontal.svg")
+        elif (current_dir / "bbia_logo_horizontal_SOURCE.svg").exists():
+            svg_path = current_dir / "bbia_logo_horizontal_SOURCE.svg"
+            print("   ✅ Utilisation: bbia_logo_horizontal_SOURCE.svg")
+        
+        if svg_path:
+            try:
+                import cairosvg
+
+                png_path = current_dir / "bbia_logo_horizontal.png"
+                with open(svg_path, "rb") as f:
+                    svg_data = f.read()
+                cairosvg.svg2png(bytestring=svg_data, write_to=str(png_path))
+                images_to_optimize["bbia_logo_horizontal.png"] = {
+                    "github": ("bbia_logo_horizontal_github.png", (600, None)),
+                    "thumbnail": ("bbia_logo_horizontal_thumb.png", (300, None)),
+                }
+                print(f"   ℹ️  SVG converti en PNG pour optimisation")
+            except Exception as e:
+                print(f"   ⚠️  Impossible de convertir SVG: {e}")
+        else:
+            print("   ❌ Aucun fichier SVG Horizontal trouvé !")
 
     # Mark Only 512x512
     if (current_dir / "bbia_mark_only_512x512.png").exists():
