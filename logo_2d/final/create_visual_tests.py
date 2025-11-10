@@ -103,8 +103,6 @@ def main():
         svg_path = "bbia_mark_only_v2_SOURCE.svg"
         if os.path.exists(svg_path):
             print(f"   ✅ Utilisation du SVG: {svg_path}")
-        
-        if svg_path:
             # Convertir SVG en PNG temporaire
             try:
                 import cairosvg
