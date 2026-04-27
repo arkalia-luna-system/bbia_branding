@@ -1,3 +1,17 @@
+## ⚠️ Dépôt déprécié
+
+Ce repository est **déprécié** et va être archivé en lecture seule.
+
+Les assets ont été migrés vers le repository principal `bbia-sim` :
+- `assets/branding/bbia_branding/logo_2d/`
+- `assets/branding/bbia_branding/style_guide/`
+- `assets/branding/bbia_branding/variants/`
+- `assets/branding/bbia_branding/docs/`
+
+Merci d'ouvrir désormais les mises à jour branding dans `bbia-sim`.
+
+---
+
 # 🎨 BBIA BRANDING
 
 <div align="center">
